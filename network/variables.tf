@@ -46,10 +46,10 @@ variable "ingress_name" {
   type = string
 }
 
-variable "jenkins_domain_names" {
+variable "jenkins_domain_name" {
   description = ""
-  default = [ "jenkins.local" ]
-  type = list(string)
+  default = "jenkins.local"
+  type = string
 }
 
 variable "ingress_port" {

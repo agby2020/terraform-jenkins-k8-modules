@@ -104,7 +104,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           content {
             name = join("-", [ "pvc-", volume.key ])
             persistent_volume_claim {
-              claim_name = volume.value
+              claim_name = volume.key
             }
           }
         }
@@ -114,7 +114,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           content {
             name = join("-", [ "jcasc", volume.key ])
             config_map {
-              name = volume.value
+              name = volume.key
             }
           }
         }

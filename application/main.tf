@@ -102,9 +102,9 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.pvc_mounts
           content {
-            name = each.key
+            name = volume.key
             persistent_volume_claim {
-              claim_name = volume.value["name"]
+              claim_name = volume.value[name]
             }
           }
         }
@@ -112,7 +112,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.casc_configs
           content {
-            name = each.key
+            name = volume.key
             config_map {
               name = volume.value["name"]
             }

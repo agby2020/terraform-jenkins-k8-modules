@@ -18,3 +18,49 @@ resource "kubernetes_service" "jenkins_service" {
     }
   }
 }
+
+resource "kubernetes_secret" "jenkins_tls_secret" {
+  metadata {
+    name      = var.tls_secret_name
+    namespace = var.namespace
+  }
+
+  data = {
+    "tls.crt" = file("jenkins.crt")
+    "tls.key" = file("jenkins.key")
+  }
+}
+
+resource "kubernetes_ingress_v1" "jenkins_ingress" {
+  metadata {
+    name      = var.ingress_name
+    namespace = module.infra.jenkins_namespace
+  }
+
+  spec {
+    tls {
+      hosts      = var.jenkins_domain_names  # Replace with your Jenkins domain
+      secret_name = kubernetes_secret.jenkins_tls_secret.metadata[0].name
+    }
+
+    dynamic rule{
+      for_each = var.jenkins_domain_names
+      content {
+        host = each.key
+        http {
+          path {
+            path     = "/"
+            backend {
+              service {
+                name = kubernetes_service.jenkins_service.metadata[0].name
+                port {
+                  number = var.ingress_port
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

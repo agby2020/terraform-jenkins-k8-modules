@@ -5,8 +5,8 @@ provider "kubernetes" {
 
 resource "kubernetes_service" "jenkins_service" {
   metadata {
-    name = var.jenkins_service_name
-    namespace = var.jenkins_namespace
+    name = var.service_name
+    namespace = var.namespace
   }
   spec {
     selector = {"app": var.selector_app}

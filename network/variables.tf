@@ -1,10 +1,10 @@
-variable "jenkins_service_name" {
+variable "service_name" {
   description = ""
   default = "jenkins"
   type = string
 }
 
-variable "jenkins_namespace" {
+variable "namespace" {
   description = ""
   default = "jenkins"
   type = string

@@ -112,9 +112,9 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.casc_configs
           content {
-            name = volume.key
+            name = volume.value
             config_map {
-              name = volume.key
+              name = volume.value
             }
           }
         }

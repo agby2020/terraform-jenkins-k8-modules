@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           dynamic "volume_mount" {
             for_each = var.pvc_mounts
             content {
-              name = join("-", [ "pvc-", volume_mount.key ])
+              name = join("-", [ "pvc", volume_mount.key ])
               mount_path = volume_mount.value
             }
           }
@@ -102,7 +102,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.pvc_mounts
           content {
-            name = join("-", [ "pvc-", volume.key ])
+            name = join("-", [ "pvc", volume.key ])
             persistent_volume_claim {
               claim_name = volume.key
             }

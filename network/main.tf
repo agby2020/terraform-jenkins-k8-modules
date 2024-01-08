@@ -34,7 +34,7 @@ resource "kubernetes_secret" "jenkins_tls_secret" {
 resource "kubernetes_ingress_v1" "jenkins_ingress" {
   metadata {
     name      = var.ingress_name
-    namespace = module.infra.jenkins_namespace
+    namespace = var.namespace
   }
 
   spec {

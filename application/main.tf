@@ -104,7 +104,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           content {
             name = volume.key
             persistent_volume_claim {
-              claim_name = volume.value[name]
+              claim_name = volume.value[volume.key]
             }
           }
         }
@@ -114,7 +114,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           content {
             name = volume.key
             config_map {
-              name = volume.value["name"]
+              name = volume.value[volume.key]
             }
           }
         }

@@ -110,7 +110,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         }
 
         dynamic "volume" {
-          for_each = var.pvc_mounts
+          for_each = var.casc_configs
           content {
             name = concat("casc-", each.key)
             config_map {

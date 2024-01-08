@@ -43,7 +43,7 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
       secret_name = kubernetes_secret.jenkins_tls_secret.metadata[0].name
     }
 
-    dynamic rule{
+    dynamic "rule" {
       for_each = var.jenkins_domain_names
       content {
         host = each.key

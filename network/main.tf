@@ -40,30 +40,27 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
 
   spec {
     tls {
-      hosts      = var.jenkins_domain_names  # Replace with your Jenkins domain
+      hosts      = [ var.jenkins_domain_names ]  # Replace with your Jenkins domain
       secret_name = kubernetes_secret.jenkins_tls_secret.metadata[0].name
     }
 
-    dynamic "rule" {
-      for_each = var.jenkins_domain_names
-      content {
-        host = each.key
-        http {
-          path {
-            path = "/"
-            backend {
-              service {
-                name = kubernetes_service.jenkins_service.metadata[0].name
-                port {
-                  number = var.ingress_port
-                }
+   rule {
+      host = each.key
+      http {
+        path {
+          path = "/"
+          backend {
+            service {
+              name = kubernetes_service.jenkins_service.metadata[0].name
+              port {
+                number = var.ingress_port
               }
             }
           }
         }
       }
     }
-    
+
   }
 
 }

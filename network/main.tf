@@ -40,12 +40,13 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
 
   spec {
     tls {
-      hosts      = [ var.jenkins_domain_names ]  # Replace with your Jenkins domain
+      hosts      = [ var.jenkins_domain_name ]  # Replace with your Jenkins domain
       secret_name = kubernetes_secret.jenkins_tls_secret.metadata[0].name
     }
 
    rule {
-      host = each.key
+      host = var.jenkins_domain_name
+      
       http {
         path {
           path = "/"

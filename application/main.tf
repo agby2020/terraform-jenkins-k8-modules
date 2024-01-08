@@ -83,7 +83,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           dynamic "volume_mount" {
             for_each = var.pvc_mounts
             content {
-              name = concat("pvc-", volume_mount.key)
+              name = concat(["pvc-"], [volume_mount.key])
               mount_path = volume_mount.value
             }
           }
@@ -91,7 +91,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           dynamic "volume_mount" {
             for_each = var.casc_configs
             content {
-              name = concat("casc-", volume_mount.key)
+              name = concat(["casc-"], [volume_mount.key])
               mount_path = concat(var.jenkins_casc_configs_dir, "/", volume_mount.value, ".yaml")
               read_only = true
             }
@@ -102,7 +102,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.pvc_mounts
           content {
-            name = concat("pvc-", volume.key)
+            name = concat(["pvc-"], [volume.key])
             persistent_volume_claim {
               claim_name = volume.value
             }
@@ -112,7 +112,7 @@ resource "kubernetes_deployment" "jenkins_deployment" {
         dynamic "volume" {
           for_each = var.casc_configs
           content {
-            name = concat("jcasc-", volume.key)
+            name = concat(["jcasc-"], [volume.key])
             config_map {
               name = volume.value
             }

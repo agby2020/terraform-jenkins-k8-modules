@@ -32,6 +32,7 @@ resource "kubernetes_secret" "jenkins_tls_secret" {
 }
 
 resource "kubernetes_ingress_v1" "jenkins_ingress" {
+
   metadata {
     name      = var.ingress_name
     namespace = var.namespace
@@ -49,7 +50,7 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
         host = each.key
         http {
           path {
-            path     = "/"
+            path = "/"
             backend {
               service {
                 name = kubernetes_service.jenkins_service.metadata[0].name
@@ -62,5 +63,7 @@ resource "kubernetes_ingress_v1" "jenkins_ingress" {
         }
       }
     }
+    
   }
+
 }

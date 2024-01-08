@@ -91,8 +91,8 @@ resource "kubernetes_deployment" "jenkins_deployment" {
           dynamic "volume_mount" {
             for_each = var.casc_configs
             content {
-              name = volume.key
-              mount_path = join("", [ var.jenkins_casc_configs_dir, "/", volume.key, ".yaml"])
+              name = volume_mount.key
+              mount_path = join("", [ var.jenkins_casc_configs_dir, "/", volume_mount.key, ".yaml"])
               read_only = true
             }
           }

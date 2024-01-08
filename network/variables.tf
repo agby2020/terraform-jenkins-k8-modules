@@ -30,6 +30,6 @@ variable "target_port" {
 
 variable "node_port" {
   description = ""
-  default = 3000
+  default = 30000
   type = number
 }

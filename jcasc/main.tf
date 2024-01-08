@@ -4,7 +4,7 @@ provider "kubernetes" {
 }
 
 resource "kubernetes_config_map" "casc_config_map" {
-    for_each = var.casc_config_files
+    for_each = toset(var.casc_config_files)
     metadata {
         name = join("-", [ "casc", each.key ])
         namespace = var.namespace

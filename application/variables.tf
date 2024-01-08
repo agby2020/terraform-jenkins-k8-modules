@@ -96,7 +96,7 @@ variable "pvc_mounts" {
 
 variable "casc_configs" {
   description = ""
-  default = ["jenkins"]
+  default = ["casc-jenkins"]
   type = list(string)
 }
 
